@@ -1,10 +1,12 @@
 // BOUNCIES jQuery plugin by Tim Farland https://github.com/twfarland
+// Git repo: https://github.com/twfarland/bouncies
 // Makes selected elements bounce around the screen
 // Usage: 
 // $(selector).bouncies();
 // $(selector).bouncies({ rate: 30, minSpeed: 5, maxSpeed: 10, onBounce: function (el) { }}});
 
 (function ($) {
+
 
 	var $w = $(window), $d = $(document),
 		top = 0, left = 0, btm = 0, right = 0;
@@ -24,7 +26,7 @@
 	// plugin
 	$.fn.bouncies = function (o) {
 
-		var o = o || {}, items = [], k, len;
+		var o = o || {}, items = [], k, len, loop, self;
 		var speed = (o.maxSpeed || 8) - (o.minSpeed || 2), rate = o.rate || 30, bounce = o.onBounce;
 
 
@@ -48,14 +50,14 @@
 				vy: Math.ceil(Math.random() * speed) // y velocity
 			}); 
 
-			ilen = items.length;
+			len = items.length;
 		});
 
 
 		// move items
-		window.setInterval(function move () {
+		function move () {
 
-			for (k = 0; k < ilen; k++) {
+			for (k = 0; k < len; k++) {
 
 				i = items[k];
 
@@ -68,10 +70,17 @@
 	    		i.el.css({ left: i.l, top: i.t });
 	    	}
 
-	    }, rate);
+	    }
 		
 
-		return this;
+		self = {
+			el:    this,
+			items: items,
+			stop:  function () { window.clearInterval(loop); return self; },
+			start: function () { loop = window.setInterval(move, rate); return self; }
+		};
+
+		return self.start();
 	};
 
 

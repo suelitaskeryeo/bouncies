@@ -38,7 +38,7 @@
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="bouncies-min.js"></script>
+<script src="bouncies.js"></script>
 <script>
 
 (function ($) {
@@ -47,7 +47,7 @@
 	$('#items a').bouncies();
 
 	// using custom options
-	$('#items2 a').bouncies({
+	var bouncyItems = $('#items2 a').bouncies({
 		rate: 40,
 		minSpeed: 2,
 		maxSpeed: 5,
@@ -56,6 +56,12 @@
 			window.setTimeout(function () { i.el.css({ background: 'none'}) }, 1000);
 		}
 	});
+
+	// stopping the animation
+	window.setTimeout(bouncyItems.stop, 8000);
+
+	// useful handles
+	console.log(bouncyItems);
 
 })(jQuery);
 

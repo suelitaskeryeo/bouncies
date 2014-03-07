@@ -30,7 +30,7 @@ Css:
 ```    
 
 Js:
-```javascript
+```html
 <script src="jQuery.js"></script>
 <script src="bouncies.js"></script>
 <script>
@@ -49,15 +49,51 @@ See `bouncies.html` in this repo for a full example;
 
 Pass an options object to customise the behaviour:
 
-    $('#items a').bouncies({
+```javascript
+$('#items a').bouncies({
 
-        rate: 40, // The frame rate in milliseconds
+    // The frame rate in milliseconds
+    rate: 40, 
 
-        minSpeed: 2, // The minimum pixels moved per frame
-        maxSpeed: 5, // The maxiumum pixels moved per frame
+    // The minimum/maximum pixels moved per frame
+    minSpeed: 2, 
+    maxSpeed: 5,
 
-        onBounce: function (i) { // Triggered when an element bounces. Receives the bouncing object
-            i.el.css({ background: 'rgba(0, 255, 0, 0.5)'});
-            window.setTimeout(function () { i.el.css({ background: 'none'}) }, 1000);
-        }
-    });
+    /* 
+    Triggered when an element bounces. Receives the bouncing object, e.g:
+       { 
+           el: jQuery object, 
+           l:  left offset in pixels, 
+           t:  top offset in pixels,
+           r:  right extent in pixels, 
+           b:  bottom extent in pixels, 
+           vx: x velocity in pixels per frame,
+           vy: y velocity in pixels per frame
+       }
+    */   
+    onBounce: function (i) { 
+        i.el.css({ background: 'rgba(0, 255, 0, 0.5)'});
+        window.setTimeout(function () { i.el.css({ background: 'none'}) }, 1000);
+    }
+});
+```    
+
+
+### Control after initialisation
+
+The `bouncies` method returns some useful access points:
+
+```javascript
+var bouncyObj = $(selector).bouncies();
+
+// Stop and resume animation
+bouncyObj.stop();
+bouncyObj.start();
+
+// Access an array of all items
+console.log(bouncyObj.items);
+
+// The jQuery selector
+console.log(bouncyObj.el);
+
+```
