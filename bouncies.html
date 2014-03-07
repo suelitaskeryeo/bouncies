@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>Bouncies jQuery plugin demo</title>
+</head>
+<style>
+
+	/* items must be absolutely positioned, and have width and height properties */
+	#items a {
+		position: absolute;
+		display: block;
+		border: 1px solid #ff0000;
+		width: 100px;
+		height: 100px;
+	}
+
+	#items2 a {
+		position: absolute;
+		display: block;
+		border: 1px solid #00ff00;
+		width: 200px;
+		height: 200px;
+	}
+
+</style>
+</body>
+
+<div id="items">
+	<a href="/bleh">bleh</a>
+	<a href="/blah">blah</a>
+	<a href="/yo">yo</a>
+</div>
+
+
+<div id="items2">
+	<a href="/bleh">bleh</a>
+	<a href="/blah">blah</a>
+	<a href="/yo">yo</a>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="bouncies-min.js"></script>
+<script>
+
+(function ($) {
+
+	// using defaults
+	$('#items a').bouncies();
+
+	// using custom options
+	$('#items2 a').bouncies({
+		rate: 40,
+		minSpeed: 2,
+		maxSpeed: 5,
+		onBounce: function (i) {
+			i.el.css({ background: 'rgba(0, 255, 0, 0.5)'});
+			window.setTimeout(function () { i.el.css({ background: 'none'}) }, 1000);
+		}
+	});
+
+})(jQuery);
+
+</script>
+
+
+</body>
+</html>
